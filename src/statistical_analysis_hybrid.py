@@ -30,7 +30,7 @@ COMPONENT_MAP = {
 MODELS = ["bert-base-uncased", "roberta-base"]
 TASKS = ["sst2", "mrpc", "qnli", "rte"]
 SAMPLE_SIZES = [80, 320, 1280]
-SEEDS = [31, 37, 41]
+SEEDS = [31, 37, 41, 43, 47, 53]
 N_BOOTSTRAP = 10000
 
 

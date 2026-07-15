@@ -13,8 +13,8 @@ We test whether simple simultaneous composition of LoRA, BitFit, and (IA)³ prov
 - **Tasks**: SST-2, MRPC, QNLI, RTE (GLUE)
 - **Sample sizes**: 80, 320, 1280
 - **PEFT methods**: LoRA-r8, BitFit, (IA)³, LoRA+BitFit, LoRA+(IA)³, BitFit+(IA)³, LoRA+BitFit+(IA)³, LoRA-r12 (parameter-matched control)
-- **Seeds**: 31, 37, 41
-- **Total runs**: 576
+- **Seeds**: 31, 37, 41, 43, 47, 53
+- **Total runs**: 1,152
 
 ## Repository Structure
 
@@ -29,7 +29,7 @@ We test whether simple simultaneous composition of LoRA, BitFit, and (IA)³ prov
 │   ├── smoke_test.py               # Environment smoke test
 │   └── preflight.py                # (not included; env check utility)
 ├── data/
-│   └── results.csv                 # Aggregated results (576 rows)
+│   └── results.csv                 # Aggregated results (1,152 rows)
 ├── figures/                        # Publication figures (PDF)
 ├── LICENSE
 └── README.md
@@ -56,15 +56,15 @@ python src/generate_figures_hybrid.py
 python src/aggregate_results_hybrid.py
 ```
 
-The `data/results.csv` file contains all 576 experiment runs. Each row records the method, model, task, sample size, seed, accuracy, and training configuration.
+The `data/results.csv` file contains all 1,152 experiment runs (8 methods × 2 models × 4 tasks × 3 sizes × 6 seeds). Each row records the method, model, task, sample size, seed, accuracy, and training configuration.
 
 ## Key Findings
 
 - ANOVA detects significant method effects in all 8 model–task strata
-- **0/96** hybrid-vs-best-component comparisons are significant after BH-FDR correction
-- **0/96** hybrid-vs-LoRA-r12 comparisons show positive significant advantage
-- Only **2/288** total pairwise comparisons are significant, both **negative** (BitFit+(IA)³ underperforming)
-- Collapse diagnostics: 26/192 fine-grained cells exceed 20% collapse rate
+- **0/96** LoRA-hybrid-vs-best-component comparisons are significant positive after BH-FDR correction
+- **0/96** hybrid-vs-LoRA-r12 comparisons show positive significant advantage; **15/96** are significantly negative
+- **26/288** total pairwise comparisons are significant (3 positive for BitFit+(IA)³ vs its weak components; 23 negative)
+- Collapse diagnostics: 28/192 fine-grained cells exceed 20% collapse rate
 
 The supported conclusion: this grid provides no corrected statistical evidence that naive PEFT composition is a reliable substitute for controlled capacity allocation.
 
